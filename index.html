@@ -648,7 +648,7 @@
             transform: translateY(0);
         }
 
-        /* ---------- SEPARATOR (replaces video) ---------- */
+        /* ---------- SEPARATOR (replaces video above) ---------- */
         .section-divider {
             padding: 60px 0;
             background: var(--bg-1);
@@ -927,6 +927,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .pkg-card:hover {
             transform: translateY(-6px);
@@ -952,7 +953,34 @@
             padding: 4px 16px;
             border-radius: 0 0 10px 10px;
             font-family: var(--mono);
+            z-index: 2;
         }
+        /* Shining effect for popular card */
+        .pkg-card.popular::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,215,100,0.15) 50%, transparent 60%);
+            animation: shine 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(25deg); }
+            100% { transform: translateX(100%) rotate(25deg); }
+        }
+        .pkg-card.popular .pkg-name,
+        .pkg-card.popular .pkg-price,
+        .pkg-card.popular .pkg-desc,
+        .pkg-card.popular .pkg-features,
+        .pkg-card.popular .btn {
+            position: relative;
+            z-index: 2;
+        }
+
         .pkg-name {
             font-family: var(--serif);
             font-size: 17px;
@@ -1367,6 +1395,18 @@
         .form-success.show {
             display: block;
         }
+        /* Form note highlighted */
+        .form-note {
+            background: var(--gold-dim);
+            border-left: 4px solid var(--gold-soft);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--gold-soft);
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
 
         /* ---------- VIDEO UNDER FAQ ---------- */
         .video-under-faq {
@@ -1379,17 +1419,6 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
-        }
-        .video-under-faq .video-container h2 {
-            font-family: var(--serif);
-            font-weight: 500;
-            font-size: clamp(28px, 3.6vw, 42px);
-            margin-bottom: 20px;
-            letter-spacing: -.01em;
-        }
-        .video-under-faq .video-container h2 em {
-            color: var(--gold-soft);
-            font-style: italic;
         }
         .video-under-faq .video-wrapper {
             position: relative;
@@ -1930,6 +1959,7 @@
                     </div>
                     <div class="form-card">
                         <form id="contactForm" novalidate>
+                            <div class="form-note">📌 Fill the below form and our team will shortly contact you.</div>
                             <div class="field">
                                 <label for="formName">Full name</label>
                                 <input type="text" id="formName" placeholder="e.g. Sarah Mitchell" required>
@@ -2015,10 +2045,9 @@
         <section class="video-under-faq">
             <div class="wrap">
                 <div class="video-container reveal">
-                    <h2>Watch <em>LEAD NURTURE</em> in action</h2>
                     <div class="video-wrapper">
-                        <!-- Replace the src with your actual video file -->
-                        <video controls poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%2312151d'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='20' fill='%2398a0b3' text-anchor='middle' dy='.3em'%3EPreview your LEAD NURTURE video here%3C/text%3E%3C/svg%3E">
+                        <!-- Autoplay, muted, loop, no controls -->
+                        <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%2312151d'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='20' fill='%2398a0b3' text-anchor='middle' dy='.3em'%3EPreview your LEAD NURTURE video here%3C/text%3E%3C/svg%3E">
                             <source src="lead-nurture.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -2354,7 +2383,7 @@
         addDemoBubble('out', "Hey there! Thanks for your interest in the Maple St listing. Ask me anything — price, availability, or booking a showing.",
             'System · instant');
 
-        /* ---- package transfer to form (FIXED) ---- */
+        /* ---- package transfer to form ---- */
         document.querySelectorAll('.package-cta').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const card = this.closest('.pkg-card');
