@@ -292,6 +292,18 @@
             border-color: var(--gold-dim);
             background: rgba(201, 162, 39, .06);
         }
+        .btn-strategy {
+            background: linear-gradient(180deg, #2a1f0a, #1a1305);
+            border: 1px solid var(--gold-dim);
+            color: var(--gold-soft);
+            box-shadow: 0 0 30px rgba(201, 162, 39, .08);
+        }
+        .btn-strategy:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold-soft);
+            box-shadow: 0 0 40px rgba(201, 162, 39, .15);
+            background: linear-gradient(180deg, #3a2f1a, #1a1305);
+        }
         .menu-toggle {
             display: none;
             width: 34px;
@@ -435,9 +447,16 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            color: var(--text-dim);
-            font-size: 12.5px;
-            font-family: var(--mono);
+            color: var(--gold-soft);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: var(--sans);
+            padding: 10px 18px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 100px;
+            background: rgba(201, 162, 39, .06);
+            width: fit-content;
+            letter-spacing: .02em;
         }
         .trust-row .line {
             width: 36px;
@@ -819,6 +838,30 @@
             padding: 4px 10px;
             border-radius: 100px;
         }
+        /* Strategy call section after how */
+        .section-cta-block {
+            margin-top: 50px;
+            padding: 32px 28px;
+            background: var(--surface);
+            border: 1px solid var(--gold-dim);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .section-cta-block p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin: 0;
+        }
+        .section-cta-block p strong {
+            color: var(--gold-soft);
+        }
+        .section-cta-block .btn {
+            flex-shrink: 0;
+        }
 
         /* ---------- FEATURES ---------- */
         .features {
@@ -955,7 +998,6 @@
             font-family: var(--mono);
             z-index: 2;
         }
-        /* Shining effect for popular card */
         .pkg-card.popular::after {
             content: '';
             position: absolute;
@@ -1042,6 +1084,31 @@
             margin-top: auto;
             font-size: 13px;
             padding: 10px 16px;
+        }
+
+        /* Packages note + LET'S GO */
+        .pkg-note {
+            margin-top: 40px;
+            padding: 24px 32px;
+            background: var(--surface);
+            border: 1px solid var(--gold-dim);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .pkg-note p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin: 0;
+        }
+        .pkg-note p strong {
+            color: var(--gold-soft);
+        }
+        .pkg-note .btn {
+            flex-shrink: 0;
         }
 
         /* ---------- LIVE DEMO ---------- */
@@ -1395,7 +1462,6 @@
         .form-success.show {
             display: block;
         }
-        /* Form note highlighted */
         .form-note {
             background: var(--gold-dim);
             border-left: 4px solid var(--gold-soft);
@@ -1625,6 +1691,33 @@
             margin: 0 auto;
         }
 
+        /* Footer strategy call block */
+        .footer-strategy {
+            margin-top: 20px;
+            padding: 20px 24px;
+            background: var(--surface);
+            border: 1px solid var(--gold-dim);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-strategy p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0;
+        }
+        .footer-strategy p strong {
+            color: var(--gold-soft);
+        }
+        .footer-strategy .btn {
+            flex-shrink: 0;
+            font-size: 13px;
+            padding: 10px 20px;
+        }
+
         @media(prefers-reduced-motion: reduce) {
             * {
                 animation-duration: .001ms !important;
@@ -1681,11 +1774,11 @@
                     <h1>The lead that ghosted you at midnight <em>just booked a showing.</em></h1>
                     <p class="lede">WEBIFY messages every inquiry the second it lands, keeps following up after the lead goes quiet, and hands you a booked visit — while you're asleep.</p>
                     <div class="hero-ctas">
-                        <a href="#demo" class="btn btn-gold">Watch it respond live</a>
+                        <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
                         <a href="#how" class="btn btn-ghost">See how it works</a>
                     </div>
                     <div class="trust-row">
-                        <span>BUILT FOR ALL AGENTS AND REALTORS</span>
+                        <span>NO PRESSURE. JUST A 15-MIN CHAT.</span>
                     </div>
                 </div>
                 <div class="phone-stage reveal">
@@ -1779,6 +1872,11 @@
                         </div>
                     </div>
                 </div>
+                <!-- Strategy call block after HOW IT WORKS -->
+                <div class="section-cta-block reveal">
+                    <p><strong>SEE IF THIS SYSTEM FITS YOUR BUSINESS.</strong> BOOK A FREE 15-MIN CALL</p>
+                    <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
+                </div>
             </div>
         </section>
 
@@ -1796,6 +1894,11 @@
                     <div class="feat reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 1 1 8.5-8.5Z"/><path d="M3 12l7-7M3 12l7 7"/></svg></div><h3>Multi-channel coverage</h3><p>SMS, Instagram DMs, Facebook, and web forms all flow into the same nurture sequence.</p></div>
                     <div class="feat reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l6-6M21 3l-6 6M3 3h6v6M15 15h6v6"/></svg></div><h3>Built for your listings</h3><p>Property details, price, and photos pull straight into replies — no manual copy-paste.</p></div>
                     <div class="feat reveal" data-tilt><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 3 4-6"/></svg></div><h3>Live dashboard</h3><p>Every lead, every message, every booking status — in one screen you actually check.</p></div>
+                </div>
+                <!-- Strategy call block after WHAT'S INCLUDED -->
+                <div class="section-cta-block reveal">
+                    <p><strong>READY TO STOP LOSING DEALS?</strong> LET'S HOP ON A QUICK CALL.</p>
+                    <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
                 </div>
             </div>
         </section>
@@ -1875,6 +1978,12 @@
                         </ul>
                         <a href="#contact" class="btn btn-gold package-cta">Get started</a>
                     </div>
+                </div>
+
+                <!-- Packages note -->
+                <div class="pkg-note reveal">
+                    <p><strong>NOT SURE?</strong> BOOK A FREE STRATEGY CALL TO SEE IF THIS FITS.</p>
+                    <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
                 </div>
             </div>
         </section>
@@ -1980,6 +2089,7 @@
                                     <option value="Social Pro">Social Pro – $147/mo</option>
                                     <option value="WhatsApp Pro">WhatsApp Pro – $127/mo</option>
                                     <option value="Omnichannel Pro">Omnichannel Pro – $197/mo</option>
+                                    <option value="15-minute strategy call">📞 15-min strategy call (free)</option>
                                     <option value="Not sure yet">Not sure yet – I need advice</option>
                                 </select>
                             </div>
@@ -2002,7 +2112,7 @@
                     <h2>Let your next lead get a reply before you're even awake.</h2>
                     <p>Book a walkthrough and we'll show you the nurture sequence running on one of your actual listings.</p>
                     <div class="hero-ctas">
-                        <a href="#contact" class="btn btn-gold">Book a walkthrough</a>
+                        <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
                         <a href="#packages" class="btn btn-ghost">See pricing options</a>
                     </div>
                 </div>
@@ -2046,7 +2156,6 @@
             <div class="wrap">
                 <div class="video-container reveal">
                     <div class="video-wrapper">
-                        <!-- Autoplay, muted, loop, no controls -->
                         <video autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%2312151d'/%3E%3Ctext x='50%25' y='50%25' font-family='monospace' font-size='20' fill='%2398a0b3' text-anchor='middle' dy='.3em'%3EPreview your LEAD NURTURE video here%3C/text%3E%3C/svg%3E">
                             <source src="lead-nurture.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -2082,6 +2191,11 @@
                         <a href="#contact">Contact</a>
                         <a href="#cta">Book a walkthrough</a>
                     </div>
+                </div>
+                <!-- Footer strategy call block -->
+                <div class="footer-strategy">
+                    <p><strong>STILL HAVING QUESTIONS?</strong> BOOK A FREE STRATEGY CALL.</p>
+                    <a href="https://cal.com/webify-official/15min" target="_blank" class="btn btn-gold">📅 Book a Free Strategy Call</a>
                 </div>
             </div>
             <div class="foot-bottom">
@@ -2383,18 +2497,15 @@
         addDemoBubble('out', "Hey there! Thanks for your interest in the Maple St listing. Ask me anything — price, availability, or booking a showing.",
             'System · instant');
 
-        /* ---- package transfer to form ---- */
-        document.querySelectorAll('.package-cta').forEach(btn => {
+        /* ---- package + strategy call transfer to form ---- */
+        document.querySelectorAll('.package-cta, .strategy-cta').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                const card = this.closest('.pkg-card');
-                if (card) {
-                    const pkgName = card.dataset.package;
-                    if (pkgName) {
-                        sessionStorage.setItem('selectedPackage', pkgName);
-                        const select = document.getElementById('formPackage');
-                        if (select) {
-                            select.value = pkgName;
-                        }
+                const pkg = this.dataset.package;
+                if (pkg) {
+                    sessionStorage.setItem('selectedPackage', pkg);
+                    const select = document.getElementById('formPackage');
+                    if (select) {
+                        select.value = pkg;
                     }
                 }
             });
