@@ -171,7 +171,7 @@
             z-index: 2;
         }
 
-        /* ===== PILL NAVIGATION (FIXED & PREMIUM) ===== */
+        /* ===== PILL NAVIGATION ===== */
         .pill-nav-container {
             position: fixed;
             top: 14px;
@@ -236,13 +236,16 @@
             overflow: hidden;
             flex-shrink: 0;
             border: 1px solid var(--border-soft);
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--gold-soft);
+            text-decoration: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .pill-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            border-radius: 50%;
+        .pill-logo:hover {
+            border-color: var(--gold-dim);
+            box-shadow: 0 0 20px rgba(201, 162, 39, 0.1);
         }
 
         .pill-list {
@@ -484,7 +487,7 @@
             .pill-logo {
                 width: 34px;
                 height: 34px;
-                padding: 4px;
+                font-size: 16px;
             }
             .pill {
                 font-size: 10px;
@@ -610,7 +613,6 @@
             letter-spacing: .02em;
         }
 
-        /* Phone mockup - unchanged */
         .phone-stage {
             position: relative;
             display: flex;
@@ -796,7 +798,7 @@
             transform: translateY(0);
         }
 
-        /* ===== REST OF SECTIONS (compacted for brevity) ===== */
+        /* ===== REST OF SECTIONS ===== */
         .section-divider { padding: 50px 0; background: var(--bg-1); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
         .section-divider .wrap { display: flex; justify-content: center; }
         .divider-line { width: 80px; height: 2px; background: var(--gold-dim); border-radius: 2px; }
@@ -992,7 +994,7 @@
             <!-- Left side: logo + desktop nav -->
             <div class="pill-nav-left">
                 <a href="#top" class="pill-logo" aria-label="Home">
-                    <img src="logo.png" alt="WEBIFY" onerror="this.style.display='none'">
+                    <span>W</span>
                 </a>
                 <ul class="pill-list">
                     <li class="desktop-only-item"><a href="#product" class="pill" data-section="product"><span class="label-stack"><span class="pill-label">Product</span></span></a></li>
@@ -1513,14 +1515,12 @@
                 this.classList.toggle('active');
                 popover.classList.toggle('open');
             });
-            // Close popover on link click
             popover.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileBtn.classList.remove('active');
                     popover.classList.remove('open');
                 });
             });
-            // Close popover when clicking outside
             document.addEventListener('click', function(e) {
                 if (!popover.contains(e.target) && !mobileBtn.contains(e.target)) {
                     mobileBtn.classList.remove('active');
@@ -1736,24 +1736,51 @@
         });
         addDemoBubble('out', "Hey there! Thanks for your interest in the Maple St listing. Ask me anything — price, availability, or booking a showing.", 'System · instant');
 
-        /* ---- package transfer ---- */
-        document.querySelectorAll('.package-cta, .strategy-cta').forEach(btn => {
+        /* ===== PACKAGE TRANSFER (FIXED) ===== */
+        document.querySelectorAll('.package-cta').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Find the parent package card
+                const card = this.closest('.pkg-card');
+                if (card) {
+                    const pkgName = card.dataset.package;
+                    if (pkgName) {
+                        // Store in sessionStorage for page reload scenario
+                        sessionStorage.setItem('selectedPackage', pkgName);
+                        // Directly set the dropdown value on the current page
+                        const select = document.getElementById('formPackage');
+                        if (select) {
+                            select.value = pkgName;
+                        }
+                    }
+                }
+                // Allow default anchor navigation to #contact
+            });
+        });
+
+        // Also handle strategy call buttons
+        document.querySelectorAll('.strategy-cta').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const pkg = this.dataset.package;
                 if (pkg) {
                     sessionStorage.setItem('selectedPackage', pkg);
                     const select = document.getElementById('formPackage');
-                    if (select) select.value = pkg;
+                    if (select) {
+                        select.value = pkg;
+                    }
                 }
             });
         });
 
+        // On page load, check storage for direct link access
         const formPackageSelect = document.getElementById('formPackage');
         if (formPackageSelect) {
             const stored = sessionStorage.getItem('selectedPackage');
             if (stored) {
                 for (let opt of formPackageSelect.options) {
-                    if (opt.value === stored) { opt.selected = true; break; }
+                    if (opt.value === stored) {
+                        opt.selected = true;
+                        break;
+                    }
                 }
                 sessionStorage.removeItem('selectedPackage');
             }
