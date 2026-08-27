@@ -902,7 +902,6 @@
         .demo-feed { flex: 1; padding: 14px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         .demo-feed::-webkit-scrollbar { width: 6px; }
 
-        /* FIX: Mobile overflow for Send button */
         .demo-input-row {
             display: flex;
             gap: 8px;
@@ -1143,7 +1142,6 @@
     <!-- ===== PILL NAVIGATION ===== -->
     <div class="pill-nav-container">
         <nav class="pill-nav" role="navigation">
-            <!-- Left side: logo + desktop nav -->
             <div class="pill-nav-left">
                 <a href="#top" class="pill-logo" aria-label="Home">
                     <span>W</span>
@@ -1158,8 +1156,6 @@
                     <li class="desktop-only-item"><a href="https://cal.com/webify-official/15min" target="_blank" class="pill pill-cta">📅 Free Call</a></li>
                 </ul>
             </div>
-
-            <!-- Right side: Status + Mobile Menu -->
             <div class="pill-nav-right">
                 <span class="pill pill-status"><span class="dot-live"></span><span id="clockTag">System active</span></span>
                 <button class="mobile-menu-button" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -1168,8 +1164,6 @@
                     <span class="hamburger-line"></span>
                 </button>
             </div>
-
-            <!-- Mobile popover -->
             <div class="mobile-menu-popover" id="mobilePopover">
                 <ul class="mobile-menu-list">
                     <li><a href="#product" class="mobile-menu-link">Product</a></li>
@@ -1513,7 +1507,7 @@
                                 <label for="formMessage">How can we help?</label>
                                 <textarea id="formMessage" placeholder="Tell us about your team, your lead volume, or any questions you have…"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-gold">Send message</button>
+                            <button type="submit" class="btn btn-gold" id="formSubmitBtn">Send message</button>
                             <div class="form-success" id="formSuccess">✓ Thanks! We'll be in touch within one business day.</div>
                         </form>
                     </div>
@@ -1947,18 +1941,57 @@
             }
         }
 
-        /* ---- form handler ---- */
+        /* ===== FORM SUBMISSION TO EMAIL (FormSubmit) ===== */
         const contactForm = document.getElementById('contactForm');
         const formSuccess = document.getElementById('formSuccess');
-        contactForm.addEventListener('submit', function(e) {
+        const submitBtn = document.getElementById('formSubmitBtn');
+
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // Get form data
             const name = document.getElementById('formName').value.trim();
             const email = document.getElementById('formEmail').value.trim();
-            if (!name || !email) { alert('Please fill in your name and email.'); return; }
-            formSuccess.classList.add('show');
-            contactForm.reset();
-            if (formPackageSelect) formPackageSelect.value = '';
-            setTimeout(() => { formSuccess.classList.remove('show'); }, 5000);
+            const phone = document.getElementById('formPhone').value.trim();
+            const packageVal = document.getElementById('formPackage').value;
+            const message = document.getElementById('formMessage').value.trim();
+
+            if (!name || !email) {
+                alert('Please fill in your name and email.');
+                return;
+            }
+
+            // Prepare data for FormSubmit
+            const formData = new FormData();
+            formData.append('_subject', 'New Contact Form Submission - WEBIFY');
+            formData.append('_captcha', 'false');
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('package', packageVal || 'Not selected');
+            formData.append('message', message || 'No message provided');
+
+            // Send to FormSubmit (replace the email with yours)
+            try {
+                const response = await fetch('https://formsubmit.co/hello.webifyofficial@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    formSuccess.classList.add('show');
+                    contactForm.reset();
+                    if (formPackageSelect) formPackageSelect.value = '';
+                    setTimeout(() => {
+                        formSuccess.classList.remove('show');
+                    }, 6000);
+                } else {
+                    alert('There was a problem sending your message. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection and try again.');
+                console.error(error);
+            }
         });
 
         /* ===== LEGAL MODALS JS ===== */
@@ -2110,12 +2143,10 @@
             document.body.style.overflow = '';
         }
 
-        // Close modal on overlay click
         document.getElementById('modalOverlay').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        // Close modal on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
